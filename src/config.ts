@@ -6,7 +6,15 @@ const db_conn_checker = new pool({
   user: process.env.POSTGRES_USER,
   host: process.env.POSTGRES_HOST,
   database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD})
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT})
+
+console.log(process.env.POSTGRES_USER);
+console.log(process.env.POSTGRES_HOST);
+console.log(process.env.POSTGRES_DB);
+console.log(process.env.POSTGRES_PASSWORD);
+console.log(process.env.POSTGRES_PORT);
+
 
 
 export function checkDBConnection() {

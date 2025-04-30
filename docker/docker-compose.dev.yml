@@ -5,6 +5,7 @@ services:
     env_file: ../.env
     ports:
       - "5431:5431"
+    command: -c 'port=5431'
     volumes:
       - ../pgdata:/var/lib/postgresql/data/
     networks:
