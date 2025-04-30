@@ -1,0 +1,30 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "description": "test project",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "test",
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanHub02/node-js-graphql.git"
+  },
+  "author": "Me",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KanHub02/node-js-graphql/issues"
+  },
+  "homepage": "https://github.com/KanHub02/node-js-graphql#readme",
+  "dependencies": {
+    "@apollo/server": "^4.12.0",
+    "@types/node": "^22.15.3",
+    "apollo-server": "^3.13.0",
+    "graphql": "^16.11.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
