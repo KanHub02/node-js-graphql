@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:latest #Изменить на норм версию, эта хуйня плохая практика
+    env_file: ../.env
+    ports:
+      - "5431:5431"
+    volumes:
+      - ../pgdata:/var/lib/postgresql/data/
+    networks:
+      - docker_network
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    env_file: ../.env
+    volumes:
+      - ../:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - docker_network
+
+networks:
+  docker_network:
+    driver: bridge
