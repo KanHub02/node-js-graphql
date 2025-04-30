@@ -1,22 +1,12 @@
-let users = [
-    { id: '1', name: 'Alice', email: 'alice@example.com' },
-    { id: '2', name: 'Bob', email: 'bob@example.com' },
-  ];
-  
-  export const resolvers = {
-    Query: {
-      users: () => users,
-      user: (_: any, { id }: { id: string }) => users.find(user => user.id === id),
-    },
-    Mutation: {
-      addUser: (_: any, { name, email }: { name: string; email: string }) => {
-        const newUser = {
-          id: String(users.length + 1),
-          name,
-          email,
-        };
-        users.push(newUser);
-        return newUser;
-      },
-    },
-  };
+import UserModel from './models/user';
+
+export const resolvers = {
+  Query: {
+    users: async () => await UserModel.getAll(),
+    user: async (_: any, { id }: { id: number }) => await UserModel.getById(id),
+  },
+  Mutation: {
+    addUser: async (_: any, { name, email }: { name: string; email: string }) =>
+      await UserModel.create({ name, email }),
+  },
+};
