@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:16
+    env_file: ../.env
+    ports:
+      - "5431:5431"
+    command: -c 'port=5431'
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    networks:
+      - docker_network
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - docker_network
+
+  moleculer:
+    build:
+      context: ..
+      dockerfile: Dockerfile.moleculer # Предполагается отдельный Dockerfile для Moleculer
+    env_file: ../.env
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - NODE_ENV=development # Или production, если нужно
+    volumes:
+      - ../moleculer.config.js:/app/moleculer.config.js # Монтируем ваш конфиг
+      - ../services:/app/services # Папка с сервисами Moleculer
+    ports:
+      - "3000:3000" # Порт для Moleculer API (если нужен)
+    depends_on:
+      - redis
+    networks:
+      - docker_network
+
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    env_file: ../.env
+    volumes:
+      - ../:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - redis
+      - moleculer
+    networks:
+      - docker_network
+
+networks:
+  docker_network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:
